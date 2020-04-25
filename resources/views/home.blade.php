@@ -4,6 +4,8 @@
     <pagina-component tamanho="10">
         <painel-Component titulo="Dashboard">
 
+            <link-navegacao-component v-bind:link="{{$linkNavegacao}}"></link-navegacao-component>
+
             <div class="row">
                 <div class="col-md-4">
                 <caixa-component qtd="80" titulo="Artigos" url="{{route('artigos.index')}}" cor="blue" icone="ion ion-pie-graph"></caixa-component>

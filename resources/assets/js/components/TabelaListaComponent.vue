@@ -73,7 +73,7 @@
               this.ordemAux = "asc";
             }
           }
-      },
+      }, 
       computed:{
         lista:function(){
           let ordem =  this.ordemAux;
