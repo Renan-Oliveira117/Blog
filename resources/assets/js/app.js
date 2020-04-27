@@ -8,19 +8,37 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+import Vuex from 'vuex';
+Vue.use(Vuex);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+//VUEX
+
+  const store = new Vuex.Store({
+    state:{
+        item:{}
+    },
+    mutations:{
+        setItem(state,obj){
+            state.item = obj;
+        }
+    }
+});
+
 
 Vue.component('topo-component', require('./components/TopoComponent.vue'));
 Vue.component('painel-component', require('./components/PainelComponent.vue'));
 Vue.component('caixa-component', require('./components/CaixaComponent.vue'));
 Vue.component('pagina-component',require('./components/PaginaComponent.vue'));
 Vue.component('tabela-lista-component',require('./components/TabelaListaComponent.vue'));
-Vue.component('link-navegacao-component',require('./components/LinkNavegacaoComponent'));
+Vue.component('link-navegacao-component',require('./components/LinkNavegacaoComponent.vue'));
+Vue.component('modal-component',require('./components/modal/ModalComponent.vue'));
+Vue.component('modal-link-component',require('./components/modal/ModalLinkComponent.vue'));
+Vue.component('formulario-component',require('./components/FormularioComponent.vue'))
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });

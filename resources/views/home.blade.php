@@ -16,7 +16,11 @@
                 <div class="col-md-4">
                     <caixa-component qtd="3" titulo="Autores" url="#" cor="green" icone="ion-person"></caixa-component>
                 </div>
+                <div class="col-md-4">
+                    <caixa-component qtd="5" titulo="ian" url="#" cor="gray" icone="ion-person"></caixa-component>
+                </div>
             </div>
         </painel-Component>
     </pagina-component>
 @endsection
+
