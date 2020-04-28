@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <pagina-component tamanho="10">
+    <pagina-component tamanho="12">
         <painel-Component titulo="Dashboard">
 
             <link-navegacao-component v-bind:link="{{$linkNavegacao}}"></link-navegacao-component>

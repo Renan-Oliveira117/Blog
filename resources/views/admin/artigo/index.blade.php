@@ -31,14 +31,22 @@
     
           <!-- Modal para adcionar artigo -->
     <modal-component nome="add" titulo="Adicionar">
-      <formulario-component id="formAdicionar" classe="" action="#" method="put" enctype="multipart/form-data" token="12345">    
+    <formulario-component id="formAdicionar" classe="" action="{{route('artigos.store')}}" method="post" enctype="" token="{{ csrf_token() }}">    
         <div class="form-group">
           <label for="titulo">Título</label>
-          <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
+          <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" required>
         </div>
         <div class="form-group">
           <label for="descricao">Descrição</label>
-          <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição">
+          <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" required>
+        </div>
+        <div class="form-group">
+          <label for="descricao">Data</label>
+          <input type="Date" class="form-control" id="data" name="data" required>
+        </div>
+        <div class="form-group">
+          <label for="conteudo">Conteúdo</label>
+          <textarea class="form-control" id="conteudo" name="conteudo" placeholder="Conteúdo do texto" required></textarea>
         </div>
       </formulario-component> 
        <span slot="botoes">
