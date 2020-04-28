@@ -16,7 +16,7 @@ class ArtigoController extends Controller
             ["titulo"=>"Lista de Artigos","url"=>""]
         ]);
 
-        $listaArtigos = json_encode(Artigo::select('id','titulo','descricao','data')->get());
+        $listaArtigos = Artigo::select('id','titulo','descricao','data')->paginate(2);
 
         
         return view('admin.artigo.index',compact('linkNavegacao','listaArtigos'));
@@ -39,7 +39,7 @@ class ArtigoController extends Controller
   
     public function show($id)
     {
-        //
+        return Artigo::find($id);
     }
 
   
@@ -51,11 +51,15 @@ class ArtigoController extends Controller
   
     public function update(Request $request, $id)
     {
-        //
+        $artigo = Artigo::find($id);
+        $artigo->update($request->all());
+
+       return redirect()->back();
     }
 
     public function destroy($id)
-    {
-        //
+    { 
+        Artigo::find($id)->delete();
+            return redirect()->back();
     }
 }

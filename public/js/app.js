@@ -47062,6 +47062,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['titulos', 'itens', 'ordem', 'ordemcol', 'criar', 'detalhe', 'editar', 'deletar', 'token', 'modal'],
@@ -47090,27 +47092,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     lista: function lista() {
       var _this = this;
 
+      var lista = this.itens.data;
       var ordem = this.ordemAux;
-      var ordemcol = this.ordemAuxCol;
+      var ordemCol = this.ordemAuxCol;
       ordem = ordem.toLowerCase();
-      ordemcol = parseInt(ordemcol);
+      ordemCol = parseInt(ordemCol);
 
       if (ordem == "asc") {
-        this.itens.sort(function (a, b) {
-          if (Object.values(a)[ordemcol] > Object.values(b)[ordemcol]) {
+        lista.sort(function (a, b) {
+          if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) {
             return 1;
           }
-          if (Object.values(a)[ordemcol] < Object.values(b)[ordemcol]) {
+          if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) {
             return -1;
           }
           return 0;
         });
       } else {
-        this.itens.sort(function (a, b) {
-          if (Object.values(a)[ordemcol] < Object.values(b)[ordemcol]) {
+        lista.sort(function (a, b) {
+          if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) {
             return 1;
           }
-          if (Object.values(a)[ordemcol] > Object.values(b)[ordemcol]) {
+          if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) {
             return -1;
           }
           return 0;
@@ -47118,7 +47121,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
       /** campo de busca */
       if (this.buscar) {
-        return this.itens.filter(function (res) {
+        return lista.filter(function (res) {
           res = Object.values(res);
           for (var i = 0; i < res.length; i++) {
             if ((res[i] + "").toLowerCase().indexOf(_this.buscar.toLowerCase()) >= 0) {
@@ -47128,7 +47131,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return false;
         });
       }
-      return this.itens;
+      return lista;
     }
   }
 });
@@ -47229,7 +47232,7 @@ var render = function() {
                           {
                             attrs: {
                               id: index,
-                              action: _vm.deletar,
+                              action: _vm.deletar + item.id,
                               method: "post"
                             }
                           },
@@ -47253,13 +47256,14 @@ var render = function() {
                                 ])
                               : _vm._e(),
                             _vm._v(" "),
-                            _vm.detalhe && _vm.modal
+                            _vm.editar && _vm.modal
                               ? _c("modal-link-component", {
                                   attrs: {
                                     item: item,
+                                    url: _vm.detalhe,
                                     tipo: "link",
                                     nome: "detalhe",
-                                    titulo: "Detalhe |",
+                                    titulo: "detalhe |",
                                     css: ""
                                   }
                                 })
@@ -47275,6 +47279,7 @@ var render = function() {
                               ? _c("modal-link-component", {
                                   attrs: {
                                     item: item,
+                                    url: _vm.editar,
                                     tipo: "link",
                                     nome: "editar",
                                     titulo: "Editar |",
@@ -47310,11 +47315,13 @@ var render = function() {
                                 ])
                               : _vm._e(),
                             _vm._v(" "),
-                            _vm.detalhe && _vm.modal
+                            _vm.editar && _vm.modal
                               ? _c("modal-link-component", {
                                   attrs: {
+                                    item: item,
+                                    url: _vm.detalhe,
                                     tipo: "link",
-                                    nome: "Detalhe",
+                                    nome: "detalhe",
                                     titulo: "detalhe |",
                                     css: ""
                                   }
@@ -47330,6 +47337,7 @@ var render = function() {
                             _vm.editar && _vm.modal
                               ? _c("modal-link-component", {
                                   attrs: {
+                                    url: _vm.editar,
                                     tipo: "link",
                                     nome: "editar",
                                     titulo: "Editar |",
@@ -47352,10 +47360,23 @@ var render = function() {
                       ? _c(
                           "span",
                           [
-                            _vm.detalhe
+                            _vm.detalhe && !_vm.modal
                               ? _c("a", { attrs: { href: _vm.detalhe } }, [
                                   _vm._v("Detalhe |")
                                 ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.detalhe && _vm.modal
+                              ? _c("modal-link-component", {
+                                  attrs: {
+                                    item: item,
+                                    url: _vm.detalhe,
+                                    tipo: "link",
+                                    nome: "detalhe",
+                                    titulo: " Detalhe |",
+                                    css: ""
+                                  }
+                                })
                               : _vm._e(),
                             _vm._v(" "),
                             _vm.editar && !_vm.modal
@@ -47367,6 +47388,8 @@ var render = function() {
                             _vm.editar && _vm.modal
                               ? _c("modal-link-component", {
                                   attrs: {
+                                    item: item,
+                                    url: _vm.editar,
                                     tipo: "link",
                                     nome: "editar",
                                     titulo: "Editar |",
@@ -47742,10 +47765,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['tipo', 'nome', 'titulo', 'css', 'item'],
+    props: ['tipo', 'nome', 'titulo', 'css', 'item', 'url'],
     methods: {
         PreencheFormulario: function PreencheFormulario() {
-            this.$store.commit('setItem', this.item);
+            var _this = this;
+
+            axios.get(this.url + this.item.id).then(function (res) {
+                _this.$store.commit('setItem', res.data);
+            });
         }
     }
 });
